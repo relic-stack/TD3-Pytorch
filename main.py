@@ -10,7 +10,7 @@ import torch
 
 '''Hyperparameter Setting'''
 parser = argparse.ArgumentParser()
-parser.add_argument('--dvc', type=str, default='cuda', help='running device: cuda or cpu')
+parser.add_argument('--dvc', type=str, default='cpu', help='running device: cuda or cpu')
 parser.add_argument('--EnvIdex', type=int, default=0, help='PV1, Lch_Cv2, Humanv4, HCv4, BWv3, BWHv3')
 parser.add_argument('--write', type=str2bool, default=False, help='Use SummaryWriter to record the training')
 parser.add_argument('--render', type=str2bool, default=False, help='Render or Not')
@@ -60,13 +60,13 @@ def main():
     print("Random Seed: {}".format(opt.seed))
 
     # Build SummaryWriter to record training curves
-    if opt.write:
-        from torch.utils.tensorboard import SummaryWriter
-        timenow = str(datetime.now())[0:-10]
-        timenow = ' ' + timenow[0:13] + '_' + timenow[-2::]
-        writepath = 'runs/{}'.format(BrifEnvName[opt.EnvIdex]) + timenow
-        if os.path.exists(writepath): shutil.rmtree(writepath)
-        writer = SummaryWriter(log_dir=writepath)
+    #if opt.write:
+        #from torch.utils.tensorboard import SummaryWriter
+        #timenow = str(datetime.now())[0:-10]
+        #timenow = ' ' + timenow[0:13] + '_' + timenow[-2::]
+        #writepath = 'runs/{}'.format(BrifEnvName[opt.EnvIdex]) + timenow
+        #if os.path.exists(writepath): shutil.rmtree(writepath)
+        #writer = SummaryWriter(log_dir=writepath)
 
 
     # Build DRL model
