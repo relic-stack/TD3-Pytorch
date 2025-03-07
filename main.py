@@ -80,7 +80,9 @@ def main():
             print('EnvName:', BrifEnvName[opt.EnvIdex], 'score:', score)
     else:
         total_steps = 0
+        episode = 0
         while total_steps < opt.Max_train_steps:
+            episode += 1
             s, info = env.reset(seed=env_seed)  # Do not use opt.seed directly, or it can overfit to opt.seed
             env_seed += 1
             done = False
@@ -108,7 +110,8 @@ def main():
                     agent.explore_noise *= opt.explore_noise_decay
                     ep_r = evaluate_policy(eval_env, agent, turns=3)
                     if opt.write: writer.add_scalar('ep_r', ep_r, global_step=total_steps)
-                    print(f'EnvName:{BrifEnvName[opt.EnvIdex]}, Steps: {int(total_steps/1000)}k, Episode Reward:{ep_r}')
+                    print(f'EnvName:{BrifEnvName[opt.EnvIdex]}, Steps: {int(total_steps/1000)}k, Episode Reward:{ep_r}, Episode: {episode},')
+                    #print(f'EnvName:{BrifEnvName[opt.EnvIdex]}, Steps: {int(total_steps/1000)}k, Episode Reward:{ep_r}')
 
                 '''save model'''
                 if total_steps % opt.save_interval == 0:
